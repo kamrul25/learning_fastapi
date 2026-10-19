@@ -6,6 +6,7 @@
 
 
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
@@ -27,3 +28,7 @@ async def read_item(item_id: str, q : str | None=None, short : bool = False):
             {"description": "This is an amazing item that has a long description"}
         )
     return item
+
+@app.get("/api", response_class=HTMLResponse, include_in_schema=False)
+async def get_html():
+    return f"<h1>Hi I am from HTML</h1>"
