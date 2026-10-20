@@ -1,7 +1,13 @@
-from fastapi import FastAPI
+# from pathlib import Path
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
+
+# Calculate path to 'templates' relative to main.py
+# BASE_DIR = Path(__file__).resolve().parent
+templates = Jinja2Templates(directory="templates")
 
 posts: list[dict] = [
     {
@@ -20,7 +26,11 @@ posts: list[dict] = [
     },
 ]
 
+@app.get("/")
+@app.get("/posts")
+async def home(request: Request):
+    return templates.TemplateResponse(request, "home.html")
 
-@app.get("/home")
-async def home():
+@app.get("/api/psots")
+async def get_posts():
     return posts
