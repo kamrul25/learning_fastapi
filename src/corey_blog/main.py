@@ -20,7 +20,7 @@ posts: list[dict] = [
     {
         "id": 2,
         "author":"Jane Doe",
-        "title": "FPython is Great for Web Development",
+        "title": "Python is Great for Web Development",
         "content": "Python is a great language for web development, and FastAPi makes it ever better",
         "date_posted": "October 19, 2026"
     },
@@ -29,7 +29,16 @@ posts: list[dict] = [
 @app.get("/")
 @app.get("/posts")
 async def home(request: Request):
-    return templates.TemplateResponse(request, "home.html")
+    # Render home.html and pass dynamic variables (title, posts)
+    return templates.TemplateResponse(
+        request=request, 
+        name="home.html", 
+        context={
+            "title": "Home",
+            "posts": posts
+        }
+    )
+
 
 @app.get("/api/psots")
 async def get_posts():

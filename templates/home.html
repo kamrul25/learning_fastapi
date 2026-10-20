@@ -1,23 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        {% if title %}
-            FasAPI Blog - {{title}}
-        {% else %}
-            FasAPI Blog
-        {% endif%}
-    </title>
-</head>
-<body>
-    <h1>Home Page</h1>
-    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat recusandae tempore nam sint nisi dolorum labore nostrum non, eius laboriosam, neque nulla delectus quam iste, ipsam ratione dolorem quod. Aperiam!</p>
-    {% for post in posts %}
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.content }}</p>
+{% extends "layout.html" %}
 
+{% block content %}
+    <h1>Home Page</h1>
+    <p>Welcome to the blog!</p>
+
+    <!-- Loop through dynamic posts passed from FastAPI -->
+    {% for post in posts %}
+        <article>
+            <h2>{{ post.title }}</h2>
+            <p><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.date_posted }}</p>
+            <p>{{ post.content }}</p>
+        </article>
+        <hr>
     {% endfor %}
-</body>
-</html>
+{% endblock content %}
