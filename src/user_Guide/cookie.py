@@ -5,6 +5,17 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
+# Declare the header parameters that you need in a Pydantic model
+class CommonHeaders(BaseModel):
+    model_config = {"extra": "forbid"} # forbid extra headers
+
+    host: str
+    save_data: bool
+    if_modified_since: str | None = None
+    traceparent: str | None=None
+    x_tag: list[str] = []
+
+
 @app.get("/items/")
 async def read_items(
     ads_id: Annotated[str | None, Cookie()] = None,
@@ -32,3 +43,8 @@ async def read_header_multiple(
     x_token: Annotated[list[str] | None, Header()] = None
 ):
     return {"X-Token values": x_token}
+
+# declare the parameter as Header
+@app.get("/common/")
+async def read_common_headers(headers: Annotated[CommonHeaders, Header()]):
+    return headers
