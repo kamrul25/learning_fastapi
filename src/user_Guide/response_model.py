@@ -1,6 +1,7 @@
 from typing import Any
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from pydantic import BaseModel, EmailStr
+from fastapi.responses import JSONResponse, RedirectResponse
 
 app = FastAPI()
 
@@ -24,6 +25,14 @@ class UserOut(BaseModel):
     email: EmailStr
     full_name: str | None = None
 
+class BaseUser(BaseModel):
+    username: str
+    email: EmailStr
+    full_name: str | None=None
+
+class UserInFilter(BaseUser):
+    password: str
+
 @app.post("/")
 async def create_items(item: Item) -> Item:
     return item
@@ -36,7 +45,9 @@ async def create_item(item: Item)-> Any:
 async def create_user(user: UserIn) -> Any:
     return user
 
-
+@app.post("/userFilter/")
+async def create_user2(user: UserInFilter) -> BaseUser:
+    return user
 
 @app.get("/items/", response_model=list[Item])
 async def read_items() -> Any:
@@ -44,3 +55,9 @@ async def read_items() -> Any:
         Item(name="Kamrul", price=52.00),
         Item(name="Hasan" ,price = 32.00),
     ]
+
+@app.get("/portal")
+async def get_portal(teleport: bool = False) -> Response:
+    if teleport: 
+        return RedirectResponse(url="https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    return JSONResponse(content={"message":"Heres's your interdimensional portal."})
