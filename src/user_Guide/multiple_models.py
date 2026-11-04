@@ -63,3 +63,8 @@ async def create_user(user_in: UserIn):
 @app.get("/items/{item_id}",response_model=PlaneItem | CarItem)
 async def read_item(item_id: str):
     return items[item_id]
+
+# Response with adbitray dict
+@app.get("/keyword-weights/", response_model=dict[str, float])
+async def read_keyword_weights():
+    return {"foo": 2.3, "bar": 3.4}
