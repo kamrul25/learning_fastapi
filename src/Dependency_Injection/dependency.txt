@@ -1,0 +1,26 @@
+Why Dependency Injection needed?
+Answer: All these, whike minimizing code repetition
+
+    . Have shared logic (the same code logic again and again).
+    . Share data base connections.
+    . Enforce security, authentication, role requirements etc
+    . And many other things...
+
+
+FastAPI compatibility:
+    The simplicity of the dependency injection system makes FastAPI compatible with:
+
+    all the relational databases
+    NoSQL databases
+    external packages
+    external APIs
+    authentication and authorization systems
+    API usage monitoring systems
+    response data injection systems
+    etc.
+
+The key factor is that a dependency should be a "callable".
+
+callable? In Python is anything that Python can "call" like a function.
+
+So, if you have an object something (that might not be a function) and you can "call" it (execute it) like: something() or something(some_arguments, some_keyword_argument="foo")
