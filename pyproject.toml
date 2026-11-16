@@ -12,6 +12,7 @@ dependencies = [
     "pwdlib[argon2]>=0.3.1",
     "pyjwt>=2.15.1",
     "python-multipart>=0.0.32",
+    "sqlmodel>=0.0.50",
 ]
 
 [project.scripts]
